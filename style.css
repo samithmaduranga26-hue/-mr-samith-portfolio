@@ -316,3 +316,114 @@ body > * {
     background-color: rgba(18,21,26,.94);
   }
 }
+
+
+/* PREMIUM SITE-WIDE MOTION — MR. SAMITH */
+@keyframes samith-rise-in {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}
+@keyframes samith-soft-glow {
+  0%,100% { opacity: .12; transform: scale(1); }
+  50% { opacity: .23; transform: scale(1.08); }
+}
+@keyframes samith-ring-breathe {
+  0%,100% { transform: translateX(-50%) scale(1); opacity: .72; }
+  50% { transform: translateX(-50%) scale(1.035); opacity: 1; }
+}
+@keyframes samith-glass-shimmer {
+  0% { transform: translateX(-140%) skewX(-18deg); opacity: 0; }
+  15% { opacity: .55; }
+  100% { transform: translateX(180%) skewX(-18deg); opacity: 0; }
+}
+@keyframes samith-float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Hero entrance and ambient movement */
+.hero-copy.visible { animation: samith-rise-in .85s cubic-bezier(.2,.75,.25,1) both; }
+.hero-visual.visible { animation: samith-rise-in 1s cubic-bezier(.2,.75,.25,1) .12s both; }
+.hero-glow { animation: samith-soft-glow 8s ease-in-out infinite; }
+.portrait-ring { animation: samith-ring-breathe 7s ease-in-out infinite; }
+.hero-stamp { animation: samith-float 6s ease-in-out infinite; }
+
+/* Smooth scroll reveals using the existing IntersectionObserver in script.js */
+.reveal {
+  transition: opacity .75s cubic-bezier(.2,.7,.25,1),
+              transform .75s cubic-bezier(.2,.7,.25,1),
+              filter .75s ease;
+  filter: blur(3px);
+}
+.reveal.visible { filter: blur(0); }
+
+/* Stagger cards */
+.skill-card:nth-child(2), .experience-card:nth-child(2), .project-card:nth-child(2) { transition-delay: 80ms; }
+.skill-card:nth-child(3), .project-card:nth-child(3) { transition-delay: 140ms; }
+.skill-card:nth-child(4), .project-card:nth-child(4) { transition-delay: 200ms; }
+.project-card:nth-child(5) { transition-delay: 100ms; }
+.project-card:nth-child(6) { transition-delay: 160ms; }
+.project-card:nth-child(7) { transition-delay: 220ms; }
+.project-card:nth-child(8) { transition-delay: 280ms; }
+
+/* Interactive hover motion */
+.project-card, .skill-card, .experience-card, .contact-link,
+.filter-button, .nav-cta, .menu-toggle {
+  transition: transform .32s cubic-bezier(.2,.75,.25,1),
+              border-color .32s ease, box-shadow .32s ease,
+              background-color .32s ease, color .25s ease;
+}
+.project-card:hover, .skill-card:hover, .experience-card:hover { transform: translateY(-6px); }
+.project-image img, .about-image img {
+  transition: transform .7s cubic-bezier(.2,.7,.25,1), filter .7s ease;
+}
+.project-card:hover .project-image img { transform: scale(1.055); filter: saturate(1.08); }
+.about-image:hover img { transform: scale(1.025); }
+
+/* Glass reflection sweep */
+.project-card, .skill-card, .experience-card, .tools-panel, .showreel-box {
+  position: relative;
+  overflow: hidden;
+}
+.project-card:after, .skill-card:after, .experience-card:after,
+.tools-panel:after, .showreel-box:after {
+  content: "";
+  position: absolute;
+  top: -30%; left: -120%; width: 55%; height: 160%;
+  pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.075), transparent);
+  transform: skewX(-18deg);
+  opacity: 0;
+}
+.project-card:hover:after, .skill-card:hover:after, .experience-card:hover:after,
+.tools-panel:hover:after, .showreel-box:hover:after {
+  animation: samith-glass-shimmer 1.1s ease;
+}
+
+/* Small motion details */
+.nav-links a, .hero-social a, .social-row a, .under-link, footer a {
+  transition: color .25s ease, opacity .25s ease, transform .25s ease;
+}
+.hero-social a:hover, .social-row a:hover, footer a:hover { transform: translateY(-2px); }
+.project-open { transition: transform .3s ease, background .3s ease, box-shadow .3s ease; }
+.project-card:hover .project-open {
+  transform: rotate(45deg);
+  background: rgba(183,255,53,.16);
+  box-shadow: 0 0 22px rgba(183,255,53,.12);
+}
+.progress { box-shadow: 0 0 12px rgba(183,255,53,.35); }
+
+@media (max-width: 650px) {
+  .hero-glow { animation-duration: 10s; }
+  .portrait-ring { animation-duration: 9s; }
+  .project-card:hover, .skill-card:hover, .experience-card:hover { transform: translateY(-3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+  .reveal { opacity: 1; transform: none; filter: none; }
+}
